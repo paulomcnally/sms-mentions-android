@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
-    <string name="hello">Hello World</string>
     <string name="app_name">SMS Mentions</string>
+    <string name="sms_result_ok">Transacción en progreso...</string>
+    <string name="sms_result_error_generic_failure">Falla genérica en el envío de SMS\nIntenta más tarde.</string>
+    <string name="sms_result_error_no_service">Sin servicio para enviar SMS\nLa red no esta disponible.</string>
+    <string name="sms_result_error_null_pdu">Falla PDU en el envío de SMS\nIntenta más tarde.</string>
+    <string name="sms_result_error_radio_off">Sin señal para el envío de SMS\nIntenta más tarde.</string>
+    <string name="sms_result_delivered_ok">Esperando respuesta del servidor...</string>
+    <string name="sms_result_delivered_canceled">SMS cancelado.</string>
 </resources>

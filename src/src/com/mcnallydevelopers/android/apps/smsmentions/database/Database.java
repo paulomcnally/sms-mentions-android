@@ -85,16 +85,27 @@ public class Database extends Activity {
 	 * 
 	 * @return Cursor
 	 */
-	public void insertFriend(int uid, String name) {
+	public void insertFriend(String uid, String name) {
 		connect(DB_WRITE_AND_READ);
 		ContentValues values = new ContentValues();
 		values.put("uid", uid);
 		values.put("name", name);
 
 		sqlite.insert(databaseHelper.tblFriends, null, values);
+		Log.i(log,"User inserted: " + name);
 		disconnect();
+		
 	}
-
+	
+	public void deleteFriends(){
+		String[] where = new String[]{"1"};
+		
+		String query = "DELETE FROM tblFriends WHERE uid > ?";
+		Cursor cursor = sqlite.rawQuery(query, where);
+		startManagingCursor(cursor);
+		
+	}
+	
 
 	/*
 	 * getAllFriends
@@ -107,15 +118,16 @@ public class Database extends Activity {
 		connect(DB_READ);
 
 		String[] fields = new String[] { "uid", "name" };
+		String orderby = "name";
+		
 
-		Cursor cursor = sqlite.query(databaseHelper.tblFriends, fields,
-				null, null, null, null, null);
+		Cursor cursor = sqlite.query(databaseHelper.tblFriends, fields, null,
+				null, null, null, orderby);
 		startManagingCursor(cursor);
 		return cursor;
 
 	}
 
-	
 	/*
 	 * getConfig
 	 * 
@@ -140,8 +152,7 @@ public class Database extends Activity {
 		cursor.close();
 		return returnData;
 	}
-	
-	
+
 	/*
 	 * setConfig
 	 * 
@@ -153,6 +164,24 @@ public class Database extends Activity {
 		connect(DB_READ);
 		String query = "INSERT INTO tblConfig VALUES ( null, '" + config_key
 				+ "','" + config_value + "')";
+
+		sqlite.execSQL(query);
+
+		disconnect();
+	}
+
+	/*
+	 * deleteConfig
+	 * 
+	 * @description Delete a row in tblConfig
+	 * 
+	 * @return none
+	 */
+	public void deleteConfig(String config_key) {
+		connect(DB_READ);
+		String query = "DELETE FROM tblConfig WHERE config_key = '"
+				+ config_key + "'";
+		;
 
 		sqlite.execSQL(query);
 
